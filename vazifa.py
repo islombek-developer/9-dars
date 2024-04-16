@@ -5,22 +5,22 @@ import time
 
 start = time.perf_counter()
 
-img_url = "https://docs.google.com/spreadsheets/d/1vpMsFooIDKq8RJ-9MVbEmjI4NlUCyxThByIi4frhcGQ/export?format=csv"
+txt_url = "https://docs.google.com/spreadsheets/d/1vpMsFooIDKq8RJ-9MVbEmjI4NlUCyxThByIi4frhcGQ/export?format=csv"
 
-def img_download(url):
+def txt_download(url):
     try:
         response = requests.get(url)
-        img_content = response.text
-        img_name = "data.csv"  
-        with open(img_name, "wb") as img_file:
-            img_file.write(img_content)
-            print(f"{img_name} downloaded")
+        txt_content = response.text
+        txt_name = "data.csv"  
+        with open(txt_name, "w") as txt_file:
+            txt_file.write(txt_content)
+            print(f"{txt_name} downloaded")
 
     except Exception as e:
         print(f"Error  {url}: {e}")
 
 threads = []
-th = threading.Thread(target=img_download, args=[img_url])
+th = threading.Thread(target=txt_download, args=[txt_url])
 th.start()
 threads.append(th)
 
