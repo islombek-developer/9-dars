@@ -1,6 +1,7 @@
 import requests
 import threading
 import time
+from bs4 import BeautifulSoup
 
 start = time.perf_counter()
 
@@ -13,7 +14,8 @@ text_urls = [
 def write_text(url):
     try:
         response = requests.get(url)
-        text_content = response.text
+        result = BeautifulSoup(response.content, 'html.parser') 
+        text_content = result.get_text()  
         file_name = f"{url.split('/')[-1]}.txt"
         with open(file_name, "w", encoding="utf-8") as text_file:
             text_file.write(text_content)
@@ -31,4 +33,4 @@ for thread in threads:
     thread.join()
 
 end = time.perf_counter()
-print(f"{end - start} seconds elapsed")
+print(f"{end - start} second")
